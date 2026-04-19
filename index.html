@@ -8,14 +8,12 @@
   <meta name="description"
     content="Khóa học 8 buổi (16 tiết) trang bị kỹ năng thực chiến — từ cài đặt đến triển khai sản phẩm hoàn chỉnh với Claude Code">
 
-  <!-- Fonts — Plus Jakarta Sans + Inter, cả hai đều hỗ trợ đầy đủ tiếng Việt (Latin Extended) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&subset=vietnamese"
     rel="stylesheet">
 
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -41,7 +39,6 @@
     }
   </script>
 
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
   <style>
@@ -684,13 +681,9 @@
 
 <body>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 1. NAVIGATION                               -->
-  <!-- ═══════════════════════════════════════════ -->
   <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 md:h-20">
-        <!-- Logo -->
         <a href="#" class="flex items-center gap-2 text-decoration-none">
           <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <i data-lucide="terminal" class="w-4 h-4 text-white"></i>
@@ -698,7 +691,6 @@
           <span class="font-heading font-800 text-lg text-primary">Claude Code</span>
         </a>
 
-        <!-- Desktop Nav -->
         <div class="hidden md:flex items-center gap-8">
           <a href="#chuong-trinh" class="nav-link">Chương trình</a>
           <a href="#danh-cho-ai" class="nav-link">Đối tượng</a>
@@ -710,7 +702,6 @@
           </button>
         </div>
 
-        <!-- Mobile Hamburger -->
         <button class="md:hidden text-textMuted" onclick="toggleMobileMenu()" aria-label="Menu">
           <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
         </button>
@@ -718,7 +709,6 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <button onclick="toggleMobileMenu()" class="absolute top-5 right-5 text-textMuted">
       <i data-lucide="x" class="w-7 h-7"></i>
@@ -741,9 +731,6 @@
     }
   </script>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 2. HERO SECTION                             -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="relative pt-28 pb-20 md:pt-36 md:pb-28 bg-grid overflow-hidden">
     <div class="hero-glow"></div>
     <div class="hero-glow-2"></div>
@@ -751,7 +738,6 @@
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-        <!-- Text Column -->
         <div>
           <div class="animate-fade-up">
             <div class="project-badge mb-6">
@@ -785,7 +771,6 @@
             </a>
           </div>
 
-          <!-- Stats -->
           <div class="flex items-center gap-6 sm:gap-8 animate-fade-up delay-4">
             <div class="text-center">
               <div class="font-heading font-extrabold text-2xl text-primary">16</div>
@@ -804,7 +789,6 @@
           </div>
         </div>
 
-        <!-- Code Preview Column -->
         <div class="animate-fade-up delay-3">
           <div class="code-block">
             <div class="pt-4">
@@ -839,7 +823,6 @@
               </div>
             </div>
           </div>
-          <!-- Floating badges -->
           <div class="mt-4 flex items-center gap-3">
             <div
               class="bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 text-sm text-primary font-medium flex items-center gap-2">
@@ -859,9 +842,6 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 3. PROBLEM STATEMENT                       -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="py-20 md:py-28 bg-bg relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
@@ -915,9 +895,6 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 4. SOLUTION SECTION                        -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="py-20 md:py-28 bg-bg2 relative overflow-hidden">
     <div class="hero-glow" style="top:auto;bottom:-200px;left:20%;transform:none;opacity:0.5;"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -933,28 +910,28 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="solution-card animate-fade-up delay-1">
-          <div class="solution-icon">🎥</div>
+          <div class="solution-icon"><i data-lucide="video" class="w-7 h-7 text-primary"></i></div>
           <h3 class="font-heading font-bold text-textMain text-lg mb-3">Video ghi lại buổi học</h3>
           <p class="text-textMuted text-sm leading-relaxed">Toàn bộ buổi học được ghi lại full HD, xem lại không giới hạn sau
             khóa.</p>
         </div>
 
         <div class="solution-card animate-fade-up delay-2">
-          <div class="solution-icon">🛠️</div>
+          <div class="solution-icon"><i data-lucide="wrench" class="w-7 h-7 text-primary"></i></div>
           <h3 class="font-heading font-bold text-textMain text-lg mb-3">Trọn bộ Skills & Agents</h3>
           <p class="text-textMuted text-sm leading-relaxed">Hơn 30+ Claude Code skills và agents thực chiến, dùng ngay cho
             project thực tế.</p>
         </div>
 
         <div class="solution-card animate-fade-up delay-3">
-          <div class="solution-icon">👥</div>
+          <div class="solution-icon"><i data-lucide="users" class="w-7 h-7 text-primary"></i></div>
           <h3 class="font-heading font-bold text-textMain text-lg mb-3">Group Zalo hỗ trợ</h3>
-          <p class="text-textMuted text-sm leading-relaxed">Group Zalo riêng với giảngng viên và mentor, hỗ trợ 24/7 trong suốt
+          <p class="text-textMuted text-sm leading-relaxed">Group Zalo riêng với giảng viên và mentor, hỗ trợ 24/7 trong suốt
             khóa.</p>
         </div>
 
         <div class="solution-card animate-fade-up delay-4">
-          <div class="solution-icon">💎</div>
+          <div class="solution-icon"><i data-lucide="gem" class="w-7 h-7 text-primary"></i></div>
           <h3 class="font-heading font-bold text-textMain text-lg mb-3">Tài khoản Claude Pro</h3>
           <p class="text-textMuted text-sm leading-relaxed">Tài khoản Claude Code Pro được cấp sẵn trong suốt khóa học.</p>
         </div>
@@ -964,9 +941,6 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 5. TARGET AUDIENCE                         -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="py-20 md:py-28 bg-bg" id="danh-cho-ai">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
@@ -975,7 +949,6 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
-        <!-- Card 1 -->
         <div class="audience-card animate-fade-up delay-1">
           <div class="audience-badge">
             <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
@@ -992,7 +965,6 @@
           </div>
         </div>
 
-        <!-- Card 2 -->
         <div class="audience-card animate-fade-up delay-2">
           <div class="audience-badge">
             <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
@@ -1008,7 +980,6 @@
           </div>
         </div>
 
-        <!-- Card 3 -->
         <div class="audience-card animate-fade-up delay-3">
           <div class="audience-badge">
             <i data-lucide="palette" class="w-3.5 h-3.5"></i>
@@ -1025,7 +996,6 @@
           </div>
         </div>
 
-        <!-- Card 4 -->
         <div class="audience-card animate-fade-up delay-4">
           <div class="audience-badge">
             <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
@@ -1047,9 +1017,6 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 6. COURSE CONTENT                          -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="py-20 md:py-28 bg-bg2" id="chuong-trinh">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
@@ -1060,9 +1027,7 @@
         </p>
       </div>
 
-      <!-- Timeline -->
       <div class="max-w-3xl mx-auto">
-        <!-- Session 1 -->
         <div class="session-item animate-fade-up delay-1">
           <div class="session-dot-col">
             <div class="session-dot">1</div>
@@ -1076,7 +1041,6 @@
           </div>
         </div>
 
-        <!-- Session 2 -->
         <div class="session-item animate-fade-up delay-1">
           <div class="session-dot-col">
             <div class="session-dot">2</div>
@@ -1090,7 +1054,6 @@
           </div>
         </div>
 
-        <!-- Session 3 -->
         <div class="session-item animate-fade-up delay-2">
           <div class="session-dot-col">
             <div class="session-dot">3</div>
@@ -1107,7 +1070,6 @@
           </div>
         </div>
 
-        <!-- Session 4 -->
         <div class="session-item animate-fade-up delay-2">
           <div class="session-dot-col">
             <div class="session-dot">4</div>
@@ -1121,7 +1083,6 @@
           </div>
         </div>
 
-        <!-- Session 5 -->
         <div class="session-item animate-fade-up delay-3">
           <div class="session-dot-col">
             <div class="session-dot">5</div>
@@ -1135,7 +1096,6 @@
           </div>
         </div>
 
-        <!-- Session 6 -->
         <div class="session-item animate-fade-up delay-3">
           <div class="session-dot-col">
             <div class="session-dot">6</div>
@@ -1149,7 +1109,6 @@
           </div>
         </div>
 
-        <!-- Session 7 -->
         <div class="session-item animate-fade-up delay-4">
           <div class="session-dot-col">
             <div class="session-dot">7</div>
@@ -1163,7 +1122,6 @@
           </div>
         </div>
 
-        <!-- Session 8 -->
         <div class="session-item animate-fade-up delay-4">
           <div class="session-dot-col">
             <div class="session-dot" style="background: linear-gradient(135deg, #FF8F5A, #DF6B33);">8</div>
@@ -1184,9 +1142,6 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 7. SOCIAL PROOF                            -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="py-20 md:py-28 bg-bg" id="san-pham">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
@@ -1195,7 +1150,6 @@
         <h2 class="section-title">Sản Phẩm<br><span>Học Viên</span></h2>
       </div>
 
-      <!-- Featured Project -->
       <div class="max-w-4xl mx-auto mb-14">
         <div class="card-gradient p-1">
           <div class="bg-bg3 rounded-2xl p-8 md:p-12">
@@ -1231,7 +1185,6 @@
         </div>
       </div>
 
-      <!-- Quote -->
       <div class="max-w-3xl mx-auto">
         <div class="quote-card">
           <div class="quote-mark">"</div>
@@ -1254,9 +1207,6 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 8. CTA SECTION                             -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="py-20 md:py-28 bg-bg2 relative overflow-hidden" id="dang-ky">
     <div class="hero-glow"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -1288,9 +1238,6 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 9. FAQ SECTION                             -->
-  <!-- ═══════════════════════════════════════════ -->
   <section class="py-20 md:py-28 bg-bg" id="faq">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-14">
@@ -1299,7 +1246,6 @@
       </div>
 
       <div class="space-y-4">
-        <!-- FAQ 1 -->
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <h3 class="font-heading font-semibold text-textMain text-base">Tôi là người mới bắt đầu, có học được không?</h3>
@@ -1314,7 +1260,6 @@
           </div>
         </div>
 
-        <!-- FAQ 2 -->
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <h3 class="font-heading font-semibold text-textMain text-base">Khóa này dành cho những ai?</h3>
@@ -1329,7 +1274,6 @@
           </div>
         </div>
 
-        <!-- FAQ 3 -->
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <h3 class="font-heading font-semibold text-textMain text-base">Tôi bao giờ hoàn thành project đầu tiên?</h3>
@@ -1343,7 +1287,6 @@
           </div>
         </div>
 
-        <!-- FAQ 4 -->
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <h3 class="font-heading font-semibold text-textMain text-base">Có hỗ trợ sau khi mua không?</h3>
@@ -1357,7 +1300,6 @@
           </div>
         </div>
 
-        <!-- FAQ 5 -->
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <h3 class="font-heading font-semibold text-textMain text-base">Tôi cần chuẩn bị gì trước khi học?</h3>
@@ -1371,7 +1313,6 @@
           </div>
         </div>
 
-        <!-- FAQ 6 -->
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <h3 class="font-heading font-semibold text-textMain text-base">Tôi có được cấp tài khoản Claude Code Pro không?</h3>
@@ -1389,7 +1330,6 @@
     </div>
   </section>
 
-  <!-- FAQ Toggle Script -->
   <script>
     function toggleFaq(el) {
       const wasOpen = el.classList.contains('open');
@@ -1408,14 +1348,9 @@
 
   <div class="section-divider max-w-7xl mx-auto"></div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 10. FOOTER                                 -->
-  <!-- ═══════════════════════════════════════════ -->
   <footer class="bg-bg3 pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Main Footer Grid -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-border">
-        <!-- Brand -->
         <div class="md:col-span-1">
           <div class="flex items-center gap-2 mb-4">
             <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
@@ -1442,7 +1377,6 @@
           </div>
         </div>
 
-        <!-- Quick Links -->
         <div>
           <h4 class="font-heading font-semibold text-textMain mb-4">Khóa học</h4>
           <ul class="space-y-2.5">
@@ -1453,7 +1387,6 @@
           </ul>
         </div>
 
-        <!-- Contact -->
         <div>
           <h4 class="font-heading font-semibold text-textMain mb-4">Liên hệ</h4>
           <ul class="space-y-3">
@@ -1472,7 +1405,6 @@
           </ul>
         </div>
 
-        <!-- Newsletter -->
         <div>
           <h4 class="font-heading font-semibold text-textMain mb-4">Tips miễn phí</h4>
           <p class="text-textMuted text-sm mb-4">Nhận tips Claude Code hàng tuần qua email.</p>
@@ -1487,7 +1419,6 @@
         </div>
       </div>
 
-      <!-- Bottom -->
       <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p class="text-textMuted text-sm">© 2024 Softech Aptech. Tất cả quyền được bảo lưu.</p>
         <div class="flex items-center gap-4 text-sm text-textMuted">
@@ -1498,7 +1429,6 @@
     </div>
   </footer>
 
-  <!-- Newsletter Script -->
   <script>
     function handleNewsletter(e) {
       e.preventDefault();
@@ -1509,7 +1439,6 @@
     }
   </script>
 
-  <!-- Init Lucide Icons -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
