@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code — Khóa Học Xây Dựng Ứng Dụng Hoàn Chỉnh</title>
+  <meta name="description"
+    content="Khóa học 8 buổi (16 tiết) trang bị kỹ năng thực chiến — từ cài đặt đến triển khai sản phẩm hoàn chỉnh với Claude Code">
+
+  <!-- Fonts — Plus Jakarta Sans + Inter, cả hai đều hỗ trợ đầy đủ tiếng Việt (Latin Extended) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&subset=vietnamese"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#090A14',
+            bg2: '#0D0F1C',
+            bg3: '#12152A',
+            primary: '#DF6B33',
+            primaryDark: '#B8531F',
+            accent: '#FF8F5A',
+            textMain: '#E8EAF6',
+            textMuted: '#8892B0',
+            border: '#1E2340',
+          },
+          fontFamily: {
+            heading: ['Plus Jakarta Sans', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+  <style>
+    /* ─── Base ─── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #090A14;
+      color: #E8EAF6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #090A14;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1E2340;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #DF6B33;
+    }
+
+    /* ─── Gradient Text ─── */
+    .gradient-text {
+      background: linear-gradient(135deg, #DF6B33 0%, #FF8F5A 40%, #FFC085 70%, #DF6B33 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ─── Gradient Border Card ─── */
+    .card-gradient {
+      position: relative;
+      background: #0D0F1C;
+      border-radius: 16px;
+    }
+
+    .card-gradient::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(223, 107, 51, 0.3), rgba(255, 143, 90, 0.05), rgba(223, 107, 51, 0.15));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .card-gradient:hover::before {
+      background: linear-gradient(135deg, #DF6B33, #FF8F5A, #DF6B33);
+    }
+
+    .card-gradient:hover .card-inner {
+      transform: translateY(-2px);
+    }
+
+    .card-inner {
+      transition: transform 0.3s ease;
+    }
+
+    /* ─── Primary Button ─── */
+    .btn-primary {
+      background: #DF6B33;
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: #B8531F;
+      transform: scale(0.95);
+      box-shadow: 0 8px 30px rgba(223, 107, 51, 0.3);
+    }
+
+    /* ─── Secondary Button ─── */
+    .btn-secondary {
+      background: transparent;
+      color: #E8EAF6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: 1.5px solid #1E2340;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      border-color: #DF6B33;
+      color: #DF6B33;
+      transform: scale(0.95);
+    }
+
+    /* ─── Section Title ─── */
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      line-height: 1.15;
+      color: #E8EAF6;
+    }
+
+    .section-title span {
+      color: #DF6B33;
+    }
+
+    /* ─── Nav ─── */
+    .nav-blur {
+      background: rgba(9, 10, 20, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(30, 35, 64, 0.6);
+    }
+
+    .nav-link {
+      color: #8892B0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      color: #E8EAF6;
+    }
+
+    /* ─── Stats Bar ─── */
+    .stats-divider {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, #1E2340, transparent);
+    }
+
+    /* ─── Pain Points ─── */
+    .pain-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 20px 24px;
+      background: #0D0F1C;
+      border-radius: 12px;
+      border: 1px solid #1E2340;
+      transition: all 0.3s ease;
+    }
+
+    .pain-card:hover {
+      border-color: #DF6B33;
+      background: #12152A;
+    }
+
+    .pain-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      background: rgba(223, 107, 51, 0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #DF6B33;
+    }
+
+    /* ─── Solution Cards ─── */
+    .solution-card {
+      background: #0D0F1C;
+      border: 1px solid #1E2340;
+      border-radius: 14px;
+      padding: 28px 24px;
+      transition: all 0.3s ease;
+    }
+
+    .solution-card:hover {
+      border-color: #DF6B33;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .solution-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(223, 107, 51, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 1.5rem;
+    }
+
+    /* ─── Audience Cards ─── */
+    .audience-card {
+      background: #0D0F1C;
+      border: 1px solid #1E2340;
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .audience-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #DF6B33, #FF8F5A);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .audience-card:hover {
+      border-color: rgba(223, 107, 51, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .audience-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .audience-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(223, 107, 51, 0.1);
+      color: #DF6B33;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    /* ─── Session Timeline ─── */
+    .session-item {
+      display: flex;
+      gap: 20px;
+      position: relative;
+    }
+
+    .session-dot-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .session-dot {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      background: linear-gradient(135deg, #DF6B33, #B8531F);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #fff;
+      z-index: 1;
+    }
+
+    .session-line {
+      width: 2px;
+      flex: 1;
+      background: linear-gradient(to bottom, #DF6B33, #1E2340);
+      min-height: 40px;
+    }
+
+    .session-body {
+      background: #0D0F1C;
+      border: 1px solid #1E2340;
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      flex: 1;
+      transition: all 0.3s ease;
+    }
+
+    .session-body:hover {
+      border-color: #DF6B33;
+      background: #12152A;
+    }
+
+    .session-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #E8EAF6;
+      margin-bottom: 6px;
+    }
+
+    .session-desc {
+      color: #8892B0;
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .session-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(223, 107, 51, 0.1);
+      color: #DF6B33;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+
+    /* ─── Social Proof ─── */
+    .quote-card {
+      background: linear-gradient(135deg, #0D0F1C, #12152A);
+      border: 1px solid #1E2340;
+      border-left: 3px solid #DF6B33;
+      border-radius: 16px;
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    .quote-mark {
+      font-size: 4rem;
+      color: #DF6B33;
+      line-height: 1;
+      font-family: Georgia, serif;
+      opacity: 0.6;
+    }
+
+    /* ─── FAQ Accordion ─── */
+    .faq-item {
+      background: #0D0F1C;
+      border: 1px solid #1E2340;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(223, 107, 51, 0.4);
+    }
+
+    .faq-item.open {
+      border-color: #DF6B33;
+    }
+
+    .faq-question {
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    .faq-answer-inner {
+      padding: 0 24px 20px;
+      color: #8892B0;
+      line-height: 1.7;
+    }
+
+    /* ─── Footer ─── */
+    .footer-link {
+      color: #8892B0;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: #DF6B33;
+    }
+
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      background: #1E2340;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8892B0;
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+
+    .social-btn:hover {
+      background: #DF6B33;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ─── Background Effects ─── */
+    .bg-grid {
+      background-image:
+        linear-gradient(rgba(30, 35, 64, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(30, 35, 64, 0.3) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(223, 107, 51, 0.12) 0%, transparent 70%);
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .hero-glow-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 143, 90, 0.08) 0%, transparent 70%);
+      bottom: -50px;
+      right: -100px;
+      pointer-events: none;
+    }
+
+    /* ─── Animations ─── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .delay-4 {
+      animation-delay: 0.4s;
+    }
+
+    .delay-5 {
+      animation-delay: 0.5s;
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 20px rgba(223, 107, 51, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 0 40px rgba(223, 107, 51, 0.4);
+      }
+    }
+
+    .pulse-glow {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    /* ─── Mobile Nav ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 10, 20, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 100;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      color: #E8EAF6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* ─── Decorative Code Block ─── */
+    .code-block {
+      background: #0A0B14;
+      border: 1px solid #1E2340;
+      border-radius: 14px;
+      padding: 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: #8892B0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-block::before {
+      content: '● ● ●';
+      position: absolute;
+      top: 10px;
+      left: 16px;
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      color: #1E2340;
+    }
+
+    .code-line {
+      display: flex;
+      gap: 12px;
+    }
+
+    .code-num {
+      color: #2A2D45;
+      min-width: 20px;
+      user-select: none;
+    }
+
+    .code-key {
+      color: #DF6B33;
+    }
+
+    .code-str {
+      color: #7EB8DA;
+    }
+
+    .code-cmt {
+      color: #4A5070;
+    }
+
+    .code-fn {
+      color: #C3A06E;
+    }
+
+    /* ─── Project Badge ─── */
+    .project-badge {
+      background: rgba(223, 107, 51, 0.08);
+      border: 1px solid rgba(223, 107, 51, 0.3);
+      border-radius: 8px;
+      padding: 8px 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #DF6B33;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* ─── Section Divider ─── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #1E2340, transparent);
+      margin: 0 auto;
+    }
+
+    /* ─── Newsletter ─── */
+    .newsletter-input {
+      background: #0D0F1C;
+      border: 1.5px solid #1E2340;
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #E8EAF6;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .newsletter-input:focus {
+      border-color: #DF6B33;
+    }
+
+    .newsletter-input::placeholder {
+      color: #4A5070;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 1. NAVIGATION                               -->
+  <!-- ═══════════════════════════════════════════ -->
+  <nav class="nav-blur fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2 text-decoration-none">
+          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+            <i data-lucide="terminal" class="w-4 h-4 text-white"></i>
+          </div>
+          <span class="font-heading font-800 text-lg text-primary">Claude Code</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#chuong-trinh" class="nav-link">Chương trình</a>
+          <a href="#danh-cho-ai" class="nav-link">Đối tượng</a>
+          <a href="#san-pham" class="nav-link">Sản phẩm</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+          <button class="btn-primary text-sm py-3 px-6"
+            onclick="document.getElementById('dang-ky').scrollIntoView({behavior:'smooth'})">
+            Đăng Ký Ngay
+          </button>
+        </div>
+
+        <!-- Mobile Hamburger -->
+        <button class="md:hidden text-textMuted" onclick="toggleMobileMenu()" aria-label="Menu">
+          <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button onclick="toggleMobileMenu()" class="absolute top-5 right-5 text-textMuted">
+      <i data-lucide="x" class="w-7 h-7"></i>
+    </button>
+    <a href="#chuong-trinh" onclick="toggleMobileMenu()">Chương trình</a>
+    <a href="#danh-cho-ai" onclick="toggleMobileMenu()">Đối tượng</a>
+    <a href="#san-pham" onclick="toggleMobileMenu()">Sản phẩm</a>
+    <a href="#faq" onclick="toggleMobileMenu()">FAQ</a>
+    <button class="btn-primary mt-4"
+      onclick="document.getElementById('dang-ky').scrollIntoView({behavior:'smooth'}); toggleMobileMenu();">
+      Đăng Ký Ngay
+    </button>
+  </div>
+
+  <script>
+    function toggleMobileMenu() {
+      const m = document.getElementById('mobileMenu');
+      m.classList.toggle('open');
+      document.body.style.overflow = m.classList.contains('open') ? 'hidden' : '';
+    }
+  </script>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 2. HERO SECTION                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="relative pt-28 pb-20 md:pt-36 md:pb-28 bg-grid overflow-hidden">
+    <div class="hero-glow"></div>
+    <div class="hero-glow-2"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+        <!-- Text Column -->
+        <div>
+          <div class="animate-fade-up">
+            <div class="project-badge mb-6">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              Khóa học thực chiến 2025
+            </div>
+          </div>
+
+          <h1 class="font-heading font-extrabold text-4xl sm:text-5xl md:text-6xl leading-tight mb-6 animate-fade-up delay-1">
+            Xây dựng ứng dụng hoàn chỉnh với<br>
+            <span class="gradient-text">Claude Code</span>
+          </h1>
+
+          <p class="text-lg text-textMuted mb-8 leading-relaxed animate-fade-up delay-2">
+            Khóa học <strong class="text-textMain font-semibold">8 buổi (16 tiết)</strong> trang bị kỹ năng thực chiến — từ cài
+            đặt đến triển khai sản phẩm hoàn chỉnh. Không lý thuyết suông, không bài tập giả tạo.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 mb-12 animate-fade-up delay-3">
+            <button class="btn-primary text-base"
+              onclick="document.getElementById('dang-ky').scrollIntoView({behavior:'smooth'})">
+              <i data-lucide="rocket" class="w-5 h-5"></i>
+              Đăng Ký Khóa Học
+            </button>
+            <a href="#san-pham" class="btn-secondary text-base">
+              <i data-lucide="play-circle" class="w-5 h-5"></i>
+              Xem Demo
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <div class="flex items-center gap-6 sm:gap-8 animate-fade-up delay-4">
+            <div class="text-center">
+              <div class="font-heading font-extrabold text-2xl text-primary">16</div>
+              <div class="text-textMuted text-sm mt-1">tiết học</div>
+            </div>
+            <div class="stats-divider"></div>
+            <div class="text-center">
+              <div class="font-heading font-extrabold text-2xl text-primary">8</div>
+              <div class="text-textMuted text-sm mt-1">buổi thực chiến</div>
+            </div>
+            <div class="stats-divider"></div>
+            <div class="text-center">
+              <div class="font-heading font-extrabold text-2xl text-primary">1</div>
+              <div class="text-textMuted text-sm mt-1">deploy thực tế</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Preview Column -->
+        <div class="animate-fade-up delay-3">
+          <div class="code-block">
+            <div class="pt-4">
+              <div class="code-line mb-2">
+                <span class="code-cmt">// Khởi tạo project với Claude Code</span>
+              </div>
+              <div class="code-line mb-2">
+                <span class="code-key">$ </span><span class="code-fn">npx</span> <span class="code-str">claude-code init</span>
+              </div>
+              <div class="code-line mb-2">
+                <span class="code-cmt">→ Claude Agent ready</span>
+              </div>
+              <div class="code-line mb-2 mt-4">
+                <span class="code-key">$ </span><span class="code-fn">prompt</span> <span class="code-str">"Xây dựng Firebase
+                  backend"</span>
+              </div>
+              <div class="code-line mb-2">
+                <span class="code-cmt">→ Generating Firestore rules...</span>
+              </div>
+              <div class="code-line mb-2">
+                <span class="code-cmt">→ Writing Auth handlers...</span>
+              </div>
+              <div class="code-line mb-2">
+                <span class="code-cmt">→ Deploying → <span class="text-primary font-bold">✓ Done</span></span>
+              </div>
+              <div class="code-line mb-2 mt-4">
+                <span class="code-key">$ </span><span class="code-fn">deploy</span> <span class="code-str">--platform
+                  vercel</span>
+              </div>
+              <div class="code-line">
+                <span class="code-cmt">→ <span class="text-green-400">https://your-app.vercel.app</span></span>
+              </div>
+            </div>
+          </div>
+          <!-- Floating badges -->
+          <div class="mt-4 flex items-center gap-3">
+            <div
+              class="bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 text-sm text-primary font-medium flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              Firebase Backend
+            </div>
+            <div
+              class="bg-green-500/10 border border-green-500/30 rounded-full px-4 py-1.5 text-sm text-green-400 font-medium flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4"></i>
+              Vercel Deploy
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 3. PROBLEM STATEMENT                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-20 md:py-28 bg-bg relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <span class="text-primary font-heading font-semibold text-sm uppercase tracking-widest mb-4 block">Vấn đề thực tế</span>
+        <h2 class="section-title">Bạn đang gặp những<br><span>vấn đề nào?</span></h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-4xl mx-auto">
+        <div class="pain-card animate-fade-up delay-1">
+          <div class="pain-icon">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-textMain mb-1">Viết code mất quá nhiều thời gian</h3>
+            <p class="text-textMuted text-sm">Mỗi feature tốn hàng giờ, cuối ngày không kịp deadline.</p>
+          </div>
+        </div>
+
+        <div class="pain-card animate-fade-up delay-2">
+          <div class="pain-icon">
+            <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-textMain mb-1">Khó ghi nhớ syntax và APIs phức tạp</h3>
+            <p class="text-textMuted text-sm">Documentation dài hàng trăm trang, chẳng nhớ nổi.</p>
+          </div>
+        </div>
+
+        <div class="pain-card animate-fade-up delay-3">
+          <div class="pain-icon">
+            <i data-lucide="git-merge" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-textMain mb-1">Sợ làm hỏng code khi refactoring</h3>
+            <p class="text-textMuted text-sm">Mỗi lần đụng vào legacy code là một lần loay hoay.</p>
+          </div>
+        </div>
+
+        <div class="pain-card animate-fade-up delay-4">
+          <div class="pain-icon">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-textMain mb-1">Muốn tự động hóa nhưng không biết bắt đầu</h3>
+            <p class="text-textMuted text-sm">Công việc lặp đi lặp lại ngày nào cũng có, nhưng không rõ cách thoát ra.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 4. SOLUTION SECTION                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-20 md:py-28 bg-bg2 relative overflow-hidden">
+    <div class="hero-glow" style="top:auto;bottom:-200px;left:20%;transform:none;opacity:0.5;"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center mb-14">
+        <span class="text-primary font-heading font-semibold text-sm uppercase tracking-widest mb-4 block">Giải pháp</span>
+        <h2 class="section-title mb-5">Giải Pháp<br><span>Toàn Diện Cho Bạn</span></h2>
+        <p class="text-textMuted text-lg max-w-2xl mx-auto leading-relaxed">
+          Khóa học <strong class="text-textMain">8 buổi tập trung thực chiến</strong>, học cách sử dụng Claude Code để xây dựng
+          ứng dụng hoàn chỉnh từ Firebase Backend đến Frontend, deploy lên Vercel. Không lý thuyết suông — mỗi buổi đều có
+          project thực tế.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="solution-card animate-fade-up delay-1">
+          <div class="solution-icon">🎥</div>
+          <h3 class="font-heading font-bold text-textMain text-lg mb-3">Video ghi lại buổi học</h3>
+          <p class="text-textMuted text-sm leading-relaxed">Toàn bộ buổi học được ghi lại full HD, xem lại không giới hạn sau
+            khóa.</p>
+        </div>
+
+        <div class="solution-card animate-fade-up delay-2">
+          <div class="solution-icon">🛠️</div>
+          <h3 class="font-heading font-bold text-textMain text-lg mb-3">Trọn bộ Skills & Agents</h3>
+          <p class="text-textMuted text-sm leading-relaxed">Hơn 30+ Claude Code skills và agents thực chiến, dùng ngay cho
+            project thực tế.</p>
+        </div>
+
+        <div class="solution-card animate-fade-up delay-3">
+          <div class="solution-icon">👥</div>
+          <h3 class="font-heading font-bold text-textMain text-lg mb-3">Group Zalo hỗ trợ</h3>
+          <p class="text-textMuted text-sm leading-relaxed">Group Zalo riêng với giảngng viên và mentor, hỗ trợ 24/7 trong suốt
+            khóa.</p>
+        </div>
+
+        <div class="solution-card animate-fade-up delay-4">
+          <div class="solution-icon">💎</div>
+          <h3 class="font-heading font-bold text-textMain text-lg mb-3">Tài khoản Claude Pro</h3>
+          <p class="text-textMuted text-sm leading-relaxed">Tài khoản Claude Code Pro được cấp sẵn trong suốt khóa học.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 5. TARGET AUDIENCE                         -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-20 md:py-28 bg-bg" id="danh-cho-ai">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <span class="text-primary font-heading font-semibold text-sm uppercase tracking-widest mb-4 block">Đối tượng</span>
+        <h2 class="section-title">Khóa Học<br><span>Dành Cho Ai?</span></h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
+        <!-- Card 1 -->
+        <div class="audience-card animate-fade-up delay-1">
+          <div class="audience-badge">
+            <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
+            Sinh viên
+          </div>
+          <h3 class="font-heading font-bold text-textMain text-xl mb-3">Sinh viên năm 3-4 & mới ra trường</h3>
+          <p class="text-textMuted text-sm leading-relaxed">
+            Lương khởi điểm 15-25 triệu/tháng — cần kỹ năng thực tế, không phải bằng cấp. Khóa học giúp bạn nhanh chóng bắt nhịp
+            thị trường lao động.
+          </p>
+          <div class="mt-5 flex items-center gap-2 text-sm text-textMuted">
+            <i data-lucide="target" class="w-4 h-4 text-primary"></i>
+            Mục tiêu: Junior Developer / Fresher
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="audience-card animate-fade-up delay-2">
+          <div class="audience-badge">
+            <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
+            Người đi làm
+          </div>
+          <h3 class="font-heading font-bold text-textMain text-xl mb-3">Người đi làm muốn nâng cấp kỹ năng</h3>
+          <p class="text-textMuted text-sm leading-relaxed">
+            Fresher, IT Support, Tester — muốn chuyển sang vai trò Developer hoặc làm chủ AI tools để tăng năng suất làm việc.
+          </p>
+          <div class="mt-5 flex items-center gap-2 text-sm text-textMuted">
+            <i data-lucide="target" class="w-4 h-4 text-primary"></i>
+            Mục tiêu: Thăng tiến / Tăng lương
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="audience-card animate-fade-up delay-3">
+          <div class="audience-badge">
+            <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+            Non-tech
+          </div>
+          <h3 class="font-heading font-bold text-textMain text-xl mb-3">Người không chuyên kỹ thuật muốn tự xây sản phẩm</h3>
+          <p class="text-textMuted text-sm leading-relaxed">
+            PM, Designer, Entrepreneur — không cần biết lập trình chuyên nghiệp, chỉ cần biết dùng đúng công cụ AI để biến ý
+            tưởng thành sản phẩm.
+          </p>
+          <div class="mt-5 flex items-center gap-2 text-sm text-textMuted">
+            <i data-lucide="target" class="w-4 h-4 text-primary"></i>
+            Mục tiêu: Ship sản phẩm riêng
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="audience-card animate-fade-up delay-4">
+          <div class="audience-badge">
+            <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+            Developer
+          </div>
+          <h3 class="font-heading font-bold text-textMain text-xl mb-3">Developer đã có nền tảng muốn làm AI-native</h3>
+          <p class="text-textMuted text-sm leading-relaxed">
+            Đã biết code nhưng muốn học cách tích hợp Claude Code vào workflow, tự động hóa pipeline, và xây dựng sản phẩm
+            AI-first.
+          </p>
+          <div class="mt-5 flex items-center gap-2 text-sm text-textMuted">
+            <i data-lucide="target" class="w-4 h-4 text-primary"></i>
+            Mục tiêu: AI-native Developer
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 6. COURSE CONTENT                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-20 md:py-28 bg-bg2" id="chuong-trinh">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <span class="text-primary font-heading font-semibold text-sm uppercase tracking-widest mb-4 block">Nội dung</span>
+        <h2 class="section-title mb-4">Chương Trình<br><span>8 Buổi</span></h2>
+        <p class="text-textMuted text-lg max-w-xl mx-auto">
+          16 tiết học thực chiến — hoàn thành project có thể deploy ngay sau khóa học.
+        </p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="max-w-3xl mx-auto">
+        <!-- Session 1 -->
+        <div class="session-item animate-fade-up delay-1">
+          <div class="session-dot-col">
+            <div class="session-dot">1</div>
+            <div class="session-line"></div>
+          </div>
+          <div class="session-body">
+            <h3 class="session-title">Làm quen Claude Code — Cài đặt, cấu hình & luồng làm việc cơ bản</h3>
+            <p class="session-desc">Tìm hiểu Claude Code là gì, cài đặt, cấu hình môi trường và các luồng làm việc nền tảng. Học
+              cách sử dụng terminal, terminal-tools, Bash commands tích hợp.</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 0.5 tiết</div>
+          </div>
+        </div>
+
+        <!-- Session 2 -->
+        <div class="session-item animate-fade-up delay-1">
+          <div class="session-dot-col">
+            <div class="session-dot">2</div>
+            <div class="session-line"></div>
+          </div>
+          <div class="session-body">
+            <h3 class="session-title">Prompt Engineering thực chiến</h3>
+            <p class="session-desc">Cách viết prompt hiệu quả để điều khiển Claude Code tạo code đúng ý, xử lý lỗi nhanh, và tận
+              dụng tối đa ngữ cảnh. Thực hành với các tình huống thực tế.</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 0.5 tiết</div>
+          </div>
+        </div>
+
+        <!-- Session 3 -->
+        <div class="session-item animate-fade-up delay-2">
+          <div class="session-dot-col">
+            <div class="session-dot">3</div>
+            <div class="session-line"></div>
+          </div>
+          <div class="session-body" style="border-left: 3px solid #DF6B33;">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-primary/20 text-primary text-xs font-bold px-3 py-1 rounded-full">Buổi quan trọng nhất</span>
+            </div>
+            <h3 class="session-title">Thiết kế kiến trúc ứng dụng cùng AI</h3>
+            <p class="session-desc">Cách sử dụng Claude Code để thiết kế kiến trúc tổng thể, chọn tech stack phù hợp, lên ERD,
+              thiết kế API endpoints. Thực hành thiết kế project hoàn chỉnh.</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 4 tiết</div>
+          </div>
+        </div>
+
+        <!-- Session 4 -->
+        <div class="session-item animate-fade-up delay-2">
+          <div class="session-dot-col">
+            <div class="session-dot">4</div>
+            <div class="session-line"></div>
+          </div>
+          <div class="session-body">
+            <h3 class="session-title">Xây dựng Backend với Firebase</h3>
+            <p class="session-desc">Kết nối Firebase Auth, Firestore database, Firebase Storage. Xây dựng REST API endpoints,
+              viết security rules, xử lý backend logic với Claude Code.</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 4 tiết</div>
+          </div>
+        </div>
+
+        <!-- Session 5 -->
+        <div class="session-item animate-fade-up delay-3">
+          <div class="session-dot-col">
+            <div class="session-dot">5</div>
+            <div class="session-line"></div>
+          </div>
+          <div class="session-body">
+            <h3 class="session-title">Xây dựng Frontend — UI, kết nối Firebase, xử lý nghiệp vụ</h3>
+            <p class="session-desc">Xây dựng giao diện người dùng với Tailwind CSS, kết nối Firebase SDK, xử lý state management
+              và business logic. Sử dụng Claude Code để tạo component nhanh.</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 4 tiết</div>
+          </div>
+        </div>
+
+        <!-- Session 6 -->
+        <div class="session-item animate-fade-up delay-3">
+          <div class="session-dot-col">
+            <div class="session-dot">6</div>
+            <div class="session-line"></div>
+          </div>
+          <div class="session-body">
+            <h3 class="session-title">Debug & Refactor cùng AI</h3>
+            <p class="session-desc">Sử dụng Claude Code để debug lỗi logic, refactor code clean hơn, tối ưu hiệu suất. Học cách
+              đọc stack trace và đặt câu hỏi đúng để AI giải quyết vấn đề.</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 1 tiết</div>
+          </div>
+        </div>
+
+        <!-- Session 7 -->
+        <div class="session-item animate-fade-up delay-4">
+          <div class="session-dot-col">
+            <div class="session-dot">7</div>
+            <div class="session-line"></div>
+          </div>
+          <div class="session-body">
+            <h3 class="session-title">Tích hợp tính năng nâng cao</h3>
+            <p class="session-desc">Tích hợp các tính năng nâng cao: real-time subscriptions, push notifications, Cloud
+              Functions, third-party APIs (Google Maps, Stripe, AI APIs).</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 1 tiết</div>
+          </div>
+        </div>
+
+        <!-- Session 8 -->
+        <div class="session-item animate-fade-up delay-4">
+          <div class="session-dot-col">
+            <div class="session-dot" style="background: linear-gradient(135deg, #FF8F5A, #DF6B33);">8</div>
+          </div>
+          <div class="session-body" style="border: 1px solid rgba(223,107,51,0.4);">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="bg-green-500/20 text-green-400 text-xs font-bold px-3 py-1 rounded-full">Final Project</span>
+            </div>
+            <h3 class="session-title">Deploy & Hoàn thiện sản phẩm trên Vercel</h3>
+            <p class="session-desc">Deploy project lên Vercel, cấu hình custom domain, CI/CD pipeline, monitoring. Hoàn thiện
+              portfolio và nhận feedback từ giảng viên.</p>
+            <div class="session-badge"><i data-lucide="clock" class="w-3 h-3"></i> 1 tiết</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 7. SOCIAL PROOF                            -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-20 md:py-28 bg-bg" id="san-pham">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <span class="text-primary font-heading font-semibold text-sm uppercase tracking-widest mb-4 block">Sản phẩm thực
+          tế</span>
+        <h2 class="section-title">Sản Phẩm<br><span>Học Viên</span></h2>
+      </div>
+
+      <!-- Featured Project -->
+      <div class="max-w-4xl mx-auto mb-14">
+        <div class="card-gradient p-1">
+          <div class="bg-bg3 rounded-2xl p-8 md:p-12">
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+              <div class="w-full md:w-2/3">
+                <div class="flex items-center gap-3 mb-5">
+                  <span class="bg-primary/20 text-primary text-sm font-bold px-3 py-1 rounded-full">Featured Project</span>
+                  <span class="bg-green-500/20 text-green-400 text-sm font-bold px-3 py-1 rounded-full">Live Demo</span>
+                </div>
+                <h3 class="font-heading font-extrabold text-3xl text-textMain mb-3">ProjectOS — Enterprise Project</h3>
+                <p class="text-textMuted leading-relaxed mb-6">
+                  Ứng dụng quản lý dự án enterprise được xây dựng hoàn toàn với Claude Code. Sử dụng Firebase backend, giao diện
+                  React/Tailwind, deploy trên Vercel với CI/CD tự động.
+                </p>
+                <a href="https://project-management.vercel.app" target="_blank" rel="noopener"
+                  class="inline-flex items-center gap-2 text-primary font-semibold hover:underline text-sm">
+                  <i data-lucide="external-link" class="w-4 h-4"></i>
+                  project-management.vercel.app
+                </a>
+              </div>
+              <div class="w-full md:w-1/3 flex flex-col gap-4">
+                <div class="bg-bg2 rounded-xl p-5 border border-border">
+                  <div class="text-3xl font-heading font-extrabold text-primary mb-1">100%</div>
+                  <div class="text-textMuted text-sm">Học viên hoàn thành project</div>
+                </div>
+                <div class="bg-bg2 rounded-xl p-5 border border-border">
+                  <div class="text-3xl font-heading font-extrabold text-primary mb-1">∞</div>
+                  <div class="text-textMuted text-sm">Deploy thực tế lên Vercel</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quote -->
+      <div class="max-w-3xl mx-auto">
+        <div class="quote-card">
+          <div class="quote-mark">"</div>
+          <blockquote class="text-xl md:text-2xl font-heading font-bold text-textMain leading-snug mb-6 -mt-8">
+            Lập trình viên tương lai không phải người viết code nhanh nhất. Họ là người biết hướng dẫn AI tốt nhất.
+          </blockquote>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
+              <i data-lucide="lightbulb" class="w-5 h-5 text-primary"></i>
+            </div>
+            <div>
+              <div class="font-heading font-semibold text-textMain text-sm">Sứ mệnh khóa học</div>
+              <div class="text-textMuted text-xs">Biến bạn thành AI-native developer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 8. CTA SECTION                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-20 md:py-28 bg-bg2 relative overflow-hidden" id="dang-ky">
+    <div class="hero-glow"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center max-w-2xl mx-auto">
+        <h2 class="font-heading font-extrabold text-4xl md:text-5xl text-textMain mb-5 leading-tight animate-fade-up">
+          Sẵn Sàng<br><span class="gradient-text">Bắt Đầu Chưa?</span>
+        </h2>
+        <p class="text-textMuted text-lg mb-10 animate-fade-up delay-1">
+          Đăng ký ngay hôm nay và bắt đầu hành trình trở thành AI-native developer. Chỗ ngồi có hạn — đừng bỏ lỡ cơ hội.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-up delay-2">
+          <button class="btn-primary text-base pulse-glow" style="padding: 18px 40px; font-size: 1.1rem;">
+            <i data-lucide="zap" class="w-5 h-5"></i>
+            Đăng Ký Ngay
+          </button>
+          <a href="#" class="btn-secondary text-base">
+            <i data-lucide="message-circle" class="w-5 h-5"></i>
+            Liên Hệ Hỗ Trợ
+          </a>
+        </div>
+        <div class="flex items-center justify-center gap-2 text-textMuted animate-fade-up delay-3">
+          <i data-lucide="phone" class="w-4 h-4 text-primary"></i>
+          <span class="font-heading font-semibold text-textMain">Hotline:</span>
+          <a href="tel:02363779779" class="text-primary font-bold hover:underline">0236.3.779.779</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 9. FAQ SECTION                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-20 md:py-28 bg-bg" id="faq">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <span class="text-primary font-heading font-semibold text-sm uppercase tracking-widest mb-4 block">Hỗ trợ</span>
+        <h2 class="section-title">Câu Hỏi<br><span>Thường Gặp</span></h2>
+      </div>
+
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3 class="font-heading font-semibold text-textMain text-base">Tôi là người mới bắt đầu, có học được không?</h3>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-textMuted transition-transform duration-300 faq-chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Hoàn toàn có thể! Khóa học được thiết kế từ cơ bản, không yêu cầu kiến thức chuyên sâu. Giảng viên hướng dẫn từng
+              bước và luôn có group Zalo hỗ trợ 24/7. Đặc biệt, với Claude Code Pro được cấp sẵn, bạn sẽ có AI assistant hỗ trợ
+              trong suốt quá trình học.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3 class="font-heading font-semibold text-textMain text-base">Khóa này dành cho những ai?</h3>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-textMuted transition-transform duration-300 faq-chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Khóa học phù hợp với: Sinh viên năm 3-4, người mới ra trường, nhân viên IT muốn chuyển nghề (Fresher, Tester, IT
+              Support), người non-tech muốn tự xây sản phẩm (PM, Designer, Entrepreneur), và developer muốn học AI-native
+              workflow.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3 class="font-heading font-semibold text-textMain text-base">Tôi bao giờ hoàn thành project đầu tiên?</h3>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-textMuted transition-transform duration-300 faq-chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Sau buổi 5, bạn sẽ có một project hoàn chỉnh với backend Firebase và frontend. Sau buổi 8, project được deploy
+              thực tế trên Vercel. Bạn sẽ có ngay một sản phẩm trong portfolio để đi xin việc hoặc bán.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3 class="font-heading font-semibold text-textMain text-base">Có hỗ trợ sau khi mua không?</h3>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-textMuted transition-transform duration-300 faq-chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Có! Bạn được tham gia group Zalo riêng với giảng viên và mentor, hỗ trợ 24/7 trong suốt khóa học. Video buổi học
+              được cung cấp để xem lại không giới hạn. Sau khóa vẫn được hỗ trợ trong group, nhưng ưu tiên trong khóa.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3 class="font-heading font-semibold text-textMain text-base">Tôi cần chuẩn bị gì trước khi học?</h3>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-textMuted transition-transform duration-300 faq-chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Cần có laptop cài sẵn Node.js và VS Code. Không cần kinh nghiệm lập trình chuyên sâu — chỉ cần biết sử dụng máy
+              tính cơ bản. Tài khoản Claude Code Pro sẽ được cấp trong khóa, không cần đăng ký trước.
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3 class="font-heading font-semibold text-textMain text-base">Tôi có được cấp tài khoản Claude Code Pro không?</h3>
+            <i data-lucide="chevron-down" class="w-5 h-5 text-textMuted transition-transform duration-300 faq-chevron"></i>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Có! Mỗi học viên được cấp tài khoản Claude Code Pro trong suốt khóa học. Đây là công cụ chính để thực hành
+              AI-assisted development. Tài khoản này bao gồm quyền truy cập đầy đủ features của Claude Code và các MCP tools
+              tích hợp.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Toggle Script -->
+  <script>
+    function toggleFaq(el) {
+      const wasOpen = el.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('open');
+        item.querySelector('.faq-chevron').style.transform = '';
+      });
+      // Toggle clicked
+      if (!wasOpen) {
+        el.classList.add('open');
+        el.querySelector('.faq-chevron').style.transform = 'rotate(180deg)';
+      }
+    }
+  </script>
+
+  <div class="section-divider max-w-7xl mx-auto"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- 10. FOOTER                                 -->
+  <!-- ═══════════════════════════════════════════ -->
+  <footer class="bg-bg3 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Main Footer Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-border">
+        <!-- Brand -->
+        <div class="md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <i data-lucide="terminal" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-heading font-extrabold text-lg text-primary">Claude Code</span>
+          </div>
+          <p class="text-textMuted text-sm leading-relaxed mb-5">
+            Khóa học thực chiến giúp bạn xây dựng ứng dụng hoàn chỉnh với AI assistance từ Firebase đến Vercel.
+          </p>
+          <div class="flex gap-3">
+            <a href="#" class="social-btn" aria-label="Facebook">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+            <a href="#" class="social-btn" aria-label="Zalo">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="LinkedIn">
+              <i data-lucide="linkedin" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-heading font-semibold text-textMain mb-4">Khóa học</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#chuong-trinh" class="footer-link text-sm">Chương trình 8 buổi</a></li>
+            <li><a href="#danh-cho-ai" class="footer-link text-sm">Đối tượng phù hợp</a></li>
+            <li><a href="#san-pham" class="footer-link text-sm">Sản phẩm học viên</a></li>
+            <li><a href="#faq" class="footer-link text-sm">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="font-heading font-semibold text-textMain mb-4">Liên hệ</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-2 text-sm text-textMuted">
+              <i data-lucide="map-pin" class="w-4 h-4 text-primary mt-0.5 flex-shrink-0"></i>
+              <span>24 Lê Thánh Tôn, Đà Nẵng</span>
+            </li>
+            <li class="flex items-center gap-2 text-sm">
+              <i data-lucide="phone" class="w-4 h-4 text-primary flex-shrink-0"></i>
+              <a href="tel:02363779779" class="footer-link font-medium text-textMain">0236.3.779.779</a>
+            </li>
+            <li class="flex items-center gap-2 text-sm text-textMuted">
+              <i data-lucide="building-2" class="w-4 h-4 text-primary flex-shrink-0"></i>
+              <span>Softech Aptech</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div>
+          <h4 class="font-heading font-semibold text-textMain mb-4">Tips miễn phí</h4>
+          <p class="text-textMuted text-sm mb-4">Nhận tips Claude Code hàng tuần qua email.</p>
+          <form onsubmit="handleNewsletter(event)" class="space-y-3">
+            <input type="email" class="newsletter-input" placeholder="Email của bạn" required>
+            <button type="submit" class="btn-primary text-sm w-full justify-center py-3">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              Đăng ký ngay
+            </button>
+          </form>
+          <p id="newsletter-msg" class="text-sm text-primary mt-2 hidden">✓ Đăng ký thành công!</p>
+        </div>
+      </div>
+
+      <!-- Bottom -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-textMuted text-sm">© 2024 Softech Aptech. Tất cả quyền được bảo lưu.</p>
+        <div class="flex items-center gap-4 text-sm text-textMuted">
+          <a href="#" class="footer-link">Chính sách bảo mật</a>
+          <a href="#" class="footer-link">Điều khoản sử dụng</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Newsletter Script -->
+  <script>
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const msg = document.getElementById('newsletter-msg');
+      msg.classList.remove('hidden');
+      e.target.reset();
+      setTimeout(() => msg.classList.add('hidden'), 4000);
+    }
+  </script>
+
+  <!-- Init Lucide Icons -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+
+</body>
+
+</html>
